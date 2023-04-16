@@ -23,7 +23,8 @@ function addToDatabase(event) {
     const prod = axios.post('http://localhost:4000/admin/add-product', obj);
     try{
         console.log(prod);
-        const id = prod.data.id
+        const id = prod.data.newProduct.id;
+        console.log(prod.data.newProduct.id);
         setValueInUi(obj, id);
     }catch(err) {
         console.log(err);
@@ -40,8 +41,13 @@ function setValueInUi(obj, id) {
         const exp = axios.delete('http://localhost:4000/admin/delete/'+ id);
         try{
             console.log(exp);
-            // localStorage.removeItem(obj.desp);
-            expList.removeChild(li);
+            if (obj.category == "Electronic") {
+                electronicList.appendChild(li);
+            }else if(obj.category == "Food"){
+                foodList.appendChild(li);
+            }else {
+                serviceList.appendChild(li);
+            }
         }catch(err) {
             console.log(err);
         };
